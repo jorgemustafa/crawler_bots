@@ -1,5 +1,5 @@
 from time import sleep
-
+import pandas as pd
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from selenium.common.exceptions import NoSuchElementException
@@ -44,12 +44,12 @@ class SkinHunter(SeleniumSetup):
         reload = True
         while reload:
             try:
+                sleep(10)  # todo alterar para 20
                 if self.driver.find_element(By.XPATH, xpath):
                     reload = False
                     if click:
                         self.driver.find_element(By.XPATH, xpath).click()
             except NoSuchElementException:
-                sleep(10)
                 self.driver.refresh()
                 continue
 
@@ -95,25 +95,27 @@ class SkinHunter(SeleniumSetup):
 
         return self.gold_list, self.fade_list, self.blue_list
 
+    def shot_mail(self, data):
 
-def shot_mail(data_email, url):
-    qt_gold = len(data_email[url]['gold'])
-    qt_fade = len(data_email[url]['fade'])
-    qt_blue = len(data_email[url]['blue'])
-    sum_qt = qt_gold + qt_fade + qt_blue
-    html_content = render_to_string("steam/mail.html", {'gold': blue_list, 'fade': fade_list, 'blue': blue_list,
-                                                        'qt_gold': qt_gold, 'qt_fade': qt_fade, 'qt_blue': qt_blue,
-                                                        'sum': sum_qt})
-    body = strip_tags(html_content)
-    email = EmailMultiAlternatives(
-        subject='Steam Skin Seeker',
-        body=body,
-        from_email='bot@jorgemustafa.com.br',
-        to=['jorginhomustafa@gmail.com'],
-    )
-    email.attach_alternative(html_content, 'text/html')
-    if email.send():
-        print('Email enviado')
+        msg_list = []
+        for item in data:
+            url = item['url']
+            gold = item['gold']
+            fade = item['fade']
+            blue = item['blue']
+            msg_list.append(f'{url} | Gold GEM: {gold}, Blue GEM: {blue}, Fade GEM: {fade}')
+
+        html_content = render_to_string("steam/mail.html", {'msg': msg_list})
+        body = strip_tags(html_content)
+        email = EmailMultiAlternatives(
+            subject='Steam Skin Seeker',
+            body=body,
+            from_email='bot@jorgemustafa.com.br',
+            to=['jorginhomustafa@gmail.com'],
+        )
+        email.attach_alternative(html_content, 'text/html')
+        if email.send():
+            print('Email enviado')
 
     # run all pages
     # pages = self.driver.find_element(By.XPATH, '//*[@id="searchResults_ctn"]/div[3]/div[2]/div').text
