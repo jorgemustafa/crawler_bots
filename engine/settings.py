@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'twitch',
     'hideout',
     'steam'
@@ -110,7 +111,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Selenium settings
 CHROME_DRIVER_PATH = config('CHROME_DRIVER_PATH')
-SAVE_TO = config('SAVE_TO')
 
 # Twich credentials
 USER_TWITCH = config('USER_TWITCH')

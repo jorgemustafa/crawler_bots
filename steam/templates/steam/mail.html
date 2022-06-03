@@ -90,8 +90,14 @@
                                                                 <p style="font-size: 16px; color: #777777;">
                                                                     No relatório de hoje, foram encontradas algumas
                                                                     skins raras, confira abaixo: <br/>
-                                                                    {{ msg }}
                                                                 </p>
+                                                                {% for skin in data %}
+                                                                <p>Skin: {{skin.skin}}</p>
+                                                                <p>Url: {{skin.url}}</p>
+                                                                <p>Gold: {{skin.gold}}</p>
+                                                                <p>Blue: {{skin.blue}}</p>
+                                                                <br>
+                                                                {% endfor %}
                                                             </td>
                                                         </tr>
                                                         <tr>
