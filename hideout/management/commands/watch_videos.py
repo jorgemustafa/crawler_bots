@@ -12,8 +12,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print(f'Inicio {datetime.now()}')
         driver_path = settings.CHROME_DRIVER_PATH
-        user = 'jorginhomustafa@gmail.com'
-        password = 'Mohamet20@!'
+        user = settings.HIDEOUT_LOGIN
+        password = settings.HIDEOUT_PASS
         initial_url = 'https://hideout.co/login.php?'
         options = ChromeOptions()
         # options.add_argument("--headless")
