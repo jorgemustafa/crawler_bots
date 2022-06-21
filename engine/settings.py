@@ -116,6 +116,10 @@ CHROME_DRIVER_PATH = config('CHROME_DRIVER_PATH')
 USER_TWITCH = config('USER_TWITCH')
 PASS_TWITCH = config('PASS_TWITCH')
 
+# Hideout credentials
+HIDEOUT_LOGIN = config('HIDEOUT_LOGIN')
+HIDEOUT_PASS = config('HIDEOUT_PASS')
+
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
