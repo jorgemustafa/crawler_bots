@@ -30,7 +30,8 @@ class SkinHunter(SeleniumSetup):
         sleep(1)
 
     def parse_url(self, urls):
-        cond_list = ['Battle-Scarred' 'Well-Worn', 'Field-Tested', 'Minimal%20Wear', 'Factory%20New']
+        self.urls_list = []
+        cond_list = ['Battle-Scarred', 'Well-Worn', 'Field-Tested', 'Minimal%20Wear', 'Factory%20New']
         urls = urls.split(sep=',')
         for url in urls:
             for condition in cond_list:
@@ -40,15 +41,25 @@ class SkinHunter(SeleniumSetup):
     def wait_presence(self, xpath: str, click=False):
         reload = True
         while reload:
+            sleep(5)
             try:
-                sleep(5)  # todo alterar para 20
                 if self.driver.find_element(By.XPATH, xpath):
                     reload = False
                     if click:
                         self.driver.find_element(By.XPATH, xpath).click()
             except NoSuchElementException:
-                self.driver.refresh()
-                continue
+                try:
+                    if self.driver.find_element(By.XPATH, '//*[@id="searchResultsTable"]/div'):
+                        reload = False
+                except NoSuchElementException:
+                    try:
+                        if self.driver.find_element(By.XPATH,
+                                                    '//*[contains(text(), "An error was encountered while processing your request:")]'):
+                            sleep(240)
+                            self.driver.refresh()
+                    except NoSuchElementException:
+                        self.driver.refresh()
+                        continue
 
     def check_filter(self):
         if self.driver.find_element(By.XPATH, '//*[@id="ui-id-1-button"]/span[2]').text != '100':
@@ -75,16 +86,9 @@ class SkinHunter(SeleniumSetup):
         email = EmailMultiAlternatives(
             subject='Steam Skin Seeker',
             body=body,
-            from_email='bot@jorgemustafa.com.br',
+            from_email='jorge.mustafa@itmss.com.br',
             to=['jorginhomustafa@gmail.com'],
         )
         email.attach_alternative(html_content, 'text/html')
         if email.send():
             print('Email enviado')
-
-# run all pages
-# pages = self.driver.find_element(By.XPATH, '//*[@id="searchResults_ctn"]/div[3]/div[2]/div').text
-# pages.split()
-# pages = int(pages[-1])
-# for page in pages:
-#     self.driver.get()

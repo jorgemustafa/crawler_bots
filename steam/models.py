@@ -6,6 +6,7 @@ class SkinData(models.Model):
     gold = models.TextField(null=True, blank=True)
     blue = models.TextField(null=True, blank=True)
     urls = models.TextField()
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.weapon

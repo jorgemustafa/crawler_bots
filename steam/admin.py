@@ -4,7 +4,7 @@ from steam.models import SkinData, SkinLog
 
 @admin.register(SkinData)
 class SkinDataAdmin(admin.ModelAdmin):
-    list_display = ['weapon', 'gold', 'blue', 'urls']
+    list_display = ['weapon', 'gold', 'blue', 'urls', 'active']
     list_filter = ['weapon']
 
 
