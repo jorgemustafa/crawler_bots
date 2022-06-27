@@ -39,3 +39,4 @@ class Command(BaseCommand):
         else:
             print('nenhum dado')
         print(f'Fim {datetime.now()}')
+        return

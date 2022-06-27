@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from decouple import config
 
@@ -110,7 +111,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Selenium settings
-CHROME_DRIVER_PATH = config('CHROME_DRIVER_PATH')
+CHROME_DRIVER_PATH = os.environ.get('CHROMEDRIVER_PATH')
 
 # Twich credentials
 USER_TWITCH = config('USER_TWITCH')
